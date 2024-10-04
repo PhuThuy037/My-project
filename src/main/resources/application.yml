@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/my_project
+    url: jdbc:postgresql://localhost:5433/my_project
     username: username
     password: password
     driver-class-name: org.postgresql.Driver
@@ -11,3 +11,9 @@ spring:
     show-sql: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  security:
+    jwt:
+      secret-key: 843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3
+      expiration: 8640000

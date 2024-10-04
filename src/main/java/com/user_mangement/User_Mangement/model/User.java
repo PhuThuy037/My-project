@@ -1,6 +1,7 @@
 package com.user_mangement.User_Mangement.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -21,8 +24,9 @@ import java.util.stream.Collectors;
 @SuperBuilder
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "user_table")
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue
@@ -30,11 +34,14 @@ public class User implements UserDetails, Principal {
     private String username;
     private String password;
     @Column(unique = true)
-    private String email;
-    private boolean accountLocked;
-    private boolean enabled;
+     private String email;
+//    private boolean accountLocked;
+//    private boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
+    @NotNull
+    private Set<Role> roles = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private List<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -59,10 +66,10 @@ public class User implements UserDetails, Principal {
         return true;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return !accountLocked;
-    }
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return !accountLocked;
+//    }
 
     @Override
     public boolean isCredentialsNonExpired() {
@@ -71,6 +78,6 @@ public class User implements UserDetails, Principal {
 
     @Override
     public String getName() {
-        return email;
+        return username;
     }
 }

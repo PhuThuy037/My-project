@@ -7,7 +7,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,17 +17,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "role")
-@EntityListeners(AccessLevel.class)
+@Table(name = "role_")
 public class Role {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String name;
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
-    private List<User> user;
+    private Set<User> users = new HashSet<>();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
